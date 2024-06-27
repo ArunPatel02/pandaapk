@@ -13,7 +13,7 @@ AxiosInstance.interceptors.request.use(async function (config) {
   // Do something before request is sent
   let token = await getToken();
   // console.log("this is token", token);
-  config.headers["Authorization"] = token;
+  config.headers["authorization"] = token;
   return config;
 });
 

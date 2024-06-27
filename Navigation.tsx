@@ -50,7 +50,6 @@ const Navigation = ({ userLogOut, setuserLogOut }) => {
           setuserLogin(true)
           setisLoading(false)
           setuseData({ email: res.data.body.userData.email, name: res.data.body.userData.name })
-          getProductList()
         } else {
           setisLoading(false)
           alert(res.data.message)
@@ -63,9 +62,16 @@ const Navigation = ({ userLogOut, setuserLogOut }) => {
   }
 
   useEffect(() => {
-    // setisLoading(true)
-    getUser()
-  }, [])
+    if (!userLogOut) {
+      getUser()
+    }
+  }, [userLogOut])
+
+  useEffect(() => {
+    if (userLogin) {
+      getProductList()
+    }
+  }, [userLogin])
 
 
 

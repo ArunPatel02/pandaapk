@@ -6,9 +6,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from "react-native"
 import Textinput from '../helpers/Input/Textinput';
 import AxiosInstance from '../Api/Index';
+import { storeToken } from '../helpers/TokenStorage/Index';
 
 const Products = () => {
-    const { setisLoading, productList, setproductList } = useContext(AppDataContext)
+    const { setisLoading, productList, setproductList, setuserLogin } = useContext(AppDataContext)
     const [addproductList, setaddproductList] = useState([])
     const [addproductlistModelOpen, setaddproductlistModelOpen] = useState(false)
     const [addProductModelOpen, setaddProductModelOpen] = useState(false)
@@ -80,10 +81,17 @@ const Products = () => {
         }
     }
 
+    const logoutuser = async () => {
+        await storeToken("")
+        setuserLogin(false)
+    }
+
     return (
         <View>
-            <View className="px-6">
-                <CustomButton ButtonText={"add Products"} onPress={() => setaddproductlistModelOpen(true)} />
+            <View className="px-6 flex flex-row items-center gap-4">
+                <View className="flex-grow">
+                    <CustomButton ButtonText={"add Products"} onPress={() => setaddproductlistModelOpen(true)} /></View>
+                <TouchableOpacity className="-mb-3" onPress={() => logoutuser()}><AntDesign name="logout" size={30} color="black" /></TouchableOpacity>
             </View>
             <ScrollView className="mb-20">
                 {productList.length ? productList.map((item) => (<View className="border-2 border-gray-300 m-2 bg-slate-300 p-3 flex">
